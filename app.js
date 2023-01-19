@@ -1,4 +1,5 @@
 const express = require('express')
+const axios = require('axios')
 const app = express()
 
 // Middleware
@@ -13,8 +14,11 @@ app.use(function (req, res, next) {
 })
 app.use(express.json())
 
-app.get('/', (req, res) => {
-	res.send('Hello World!')
+// Policies
+app.get('/v1/policies', async (req, res) => {
+	const response = await axios.get('http://localhost:8181/v1/policies')
+	console.log(response.data.result)
+	res.send(response.data.result)
 })
 
 module.exports = app
